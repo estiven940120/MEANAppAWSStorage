@@ -1,0 +1,34 @@
+
+<mat-card style="margin-bottom: 10px; margin-top:auto; margin-top: 60px;">
+  <h3>Formulario de registro</h3>
+</mat-card>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSignup(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+    <div class="login-div">
+      <br><br>
+      <mat-form-field>
+        <input matInput name="email" ngModel type="email" placeholder="Correo electrónico" pattern="[A-Za-z0-9._%+-]+@udea.edu.co$" #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">El correo electrónico debe pertenecer a la Universidad de Antioquia</mat-error>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+      <br><br>
+      <mat-form-field>
+        <input type="password" name="password" ngModel matInput placeholder="Contraseña" pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$" #passwordInput="ngModel" required>
+        <mat-error *ngIf="passwordInput.invalid"> La contraseña debe tener una longitud mínima de 6 caracteres y tener al menos un número, una letra y un caracter especial (!@#$%^&*) </mat-error>
+        <mat-icon matSuffix>vpn_key</mat-icon>
+      </mat-form-field>
+      <br><br>
+      <mat-form-field>
+        <input type="password" name="Confirmpassword" ngModel matInput placeholder="Confirme su contraseña" #ConfirmpasswordInput="ngModel" required>
+        <mat-error *ngIf="ConfirmpasswordInput.invalid"> Las contraseñas no coindiden</mat-error>
+        <mat-icon matSuffix>vpn_key</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="buttons-div">
+        <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading" style="background-color: black;">Registrarse</button>
+        <br>
+        <button mat-raised-button color="warn" (click)="OnNavigeteLogin()">Iniciar sesión</button>
+    </div>
+  </form>
+</mat-card>

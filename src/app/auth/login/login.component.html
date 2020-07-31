@@ -1,0 +1,28 @@
+<mat-card style="margin-bottom: 10px; margin-top:auto; margin-top: 60px;">
+  <h3>Formulario de ingreso</h3>
+</mat-card>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+    <div class="login-div">
+      <br><br>
+      <mat-form-field>
+        <input matInput name="email" ngModel type="email" placeholder="Correo electrónico" pattern="[A-Za-z0-9._%+-]+@udea.edu.co$" #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">El correo electrónico debe pertenecer a la Universidad de Antioquia</mat-error>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+      <br><br>
+      <mat-form-field>
+        <input type="password" name="password" ngModel matInput placeholder="Contraseña" #passwordInput="ngModel" required>
+        <mat-error *ngIf="passwordInput.invalid"> Ingrese su contraseña</mat-error>
+        <mat-icon matSuffix>vpn_key</mat-icon>
+      </mat-form-field>
+      <p><a href="#" style="text-decoration: underline;">Olvidé mi contraseña</a></p>
+    </div>
+    <div class="buttons-div">
+        <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading" style="background-color: black;">Iniciar sesión</button>
+        <br>
+        <button mat-raised-button color="warn" (click)="OnNavigeteSignup()">Registrarse</button>
+    </div>
+  </form>
+</mat-card>

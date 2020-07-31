@@ -1,0 +1,105 @@
+<mat-card style="margin-bottom: 10px;">
+
+  <h3 style="text-align: center;">Sección de nuevo ingreso</h3>
+</mat-card>
+<mat-card>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Ingresar Paciente">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <form [formGroup]="form" (submit)="onSavePost()" *ngIf="!isLoading">
+
+        <div style="display: flex;">
+        <div class="mid-div1" style="float: left;">
+        <mat-form-field>
+          <input matInput type="text" formControlName="label" placeholder="Código de registro del paciente">
+          <mat-error *ngIf="form.get('label').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Género</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option *ngFor="let genero of generos" [value]="genero.value">
+              {{genero.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('gender').invalid">Por favor seleccione un género para el paciente</mat-error>
+        </mat-form-field>
+        <!--<mat-form-field>
+          <input matInput type="text" formControlName="gender" placeholder="Género del paciente">
+          <mat-error *ngIf="form.get('gender').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>-->
+        <mat-form-field>
+          <input matInput type="text" formControlName="scholarship" placeholder="Nivel de escolaridad">
+          <mat-error *ngIf="form.get('scholarship').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput rows="4" formControlName="content" placeholder="Observaciones"></textarea>
+          <mat-error *ngIf="form.get('content').invalid">Por favor ingrese observaciones válidas</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="mid-div2" style="float: right;">
+        <mat-form-field>
+          <input matInput type="text" formControlName="age" placeholder="Edad del paciente">
+          <mat-error *ngIf="form.get('age').invalid">Por favor ingrese una edad válida</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName="ocupation" placeholder="Ocupación">
+          <mat-error *ngIf="form.get('ocupation').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName="age_dcl" placeholder="Edad DCL">
+          <mat-error *ngIf="form.get('age_dcl').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName="age_dementia" placeholder="Edad Demencia">
+          <mat-error *ngIf="form.get('age_dementia').invalid">Por favor ingrese un código válido</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="final-div">
+        <div class="imageDiv">
+          <button mat-stroked-button type="button" (click)="filePicker.click()">Elegir registro</button>
+          <input type="file" #filePicker (change)="onRecordsPicked($event)">
+          <p>{{fileName}}</p>
+          <br>
+          <button mat-raised-button color="warn" type="submit">Guardar paciente</button>
+        </div>
+    </div>
+      </form>
+
+</mat-tab>
+    <mat-tab label="Ingresar Bioseñal">
+      <div class="imageDiv">
+        <br>
+        <p>Por favor seleccione un archivo comprimido que contenga las bioseñales, recuerde que el nombre del archivo debe contener el nombre del paciente.</p>
+        <!--
+        <button mat-stroked-button type="button" (click)="filePicker.click()">Elegir registro</button>
+        <input type="file" #filePicker (change)="onRecordsPicked($event)">
+        <p>{{fileName}}</p>
+        <br>
+        <button mat-raised-button color="warn" type="submit">Cargar señal</button>
+        -->
+      </div>
+      <!--
+
+      -->
+      <div *ngIf="currentFileUpload" class="progress">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+          aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+          {{progress.percentage}}%</div>
+      </div>
+
+      <label>
+        <p>{{fileName}}</p>
+        <button mat-stroked-button type="button" (click)="filePicker.click()">Elegir registro</button>
+        <input type="file" #filePicker (change)="selectFile($event)">
+      </label>
+<br>
+      <button class="btn btn-success" (click)="upload()">Cargar señal</button>
+
+    </mat-tab>
+
+  </mat-tab-group>
+</mat-card>
+
+
+

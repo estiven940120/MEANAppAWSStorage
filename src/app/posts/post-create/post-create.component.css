@@ -1,0 +1,32 @@
+mat-form-field,
+textarea {
+  width: 80%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+div .mid-div1{
+  padding-left: 10%;
+  padding-bottom: 1%;
+  padding-right: 2%;
+  padding-top: 2%;
+  width: 50%;
+}
+
+div .mid-div2{
+  padding-right: 10%;
+  padding-bottom: 1%;
+  padding-left: 2%;
+  padding-top: 2%;
+  width: 50%;
+}
+
+.final-div{
+  padding-left: 10%;
+}

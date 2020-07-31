@@ -1,0 +1,112 @@
+
+<mat-card style="margin-bottom: 10px;">
+  <h3 style="text-align: center;">Sección de búsqueda</h3>
+</mat-card>
+<mat-card>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Buscar paciente">
+  <div style="padding-right: 5%; padding-left: 5%;">
+    <div class="searchbar" >
+      <mat-form-field class="example-form-field" style="width: 50%">
+        <mat-label>Buscar paciente</mat-label>
+        <input matInput type="text" [(ngModel)]="searchLabel" (keyup)="OnSearch(searchLabel)">
+        <button mat-button *ngIf="searchLabel" matSuffix mat-icon-button aria-label="Clear" (click)="searchLabel=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="OnSearch(searchLabel)"><mat-icon>search</mat-icon></button>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+    <p><b>Resulados:</b></p>
+    <mat-accordion multi="false" *ngIf="posts.length > 0 && !isLoading">
+      <mat-expansion-panel *ngFor="let post of posts" >
+        <mat-expansion-panel-header (click)='showFiles(true, post.label)'>
+          <b>{{ post.label }}</b>
+        </mat-expansion-panel-header>
+        <div style="display: flex">
+          <div style="width: 30%;">
+            <b>
+            <p>Edad:</p>
+            <p>Género: </p>
+            <p>Ocupación: </p>
+            <p>Escolaridad:</p>
+            <p>Edad DCL: </p>
+            <p>Edad demencia: </p>
+            <p>Observaciones: </p>
+            </b>
+            <!--<button mat-button color="warn" (click)="onSeeFiles(post.label)">Ver archivos</button>
+            <p>{{labelToCheck}}</p>-->
+          </div>
+          <div style="width: 70%;">
+            <p>{{post.age}}</p>
+            <p>{{post.gender}}</p>
+            <p>{{post.ocupation}}</p>
+            <p>{{post.scholarship}}</p>
+            <p>{{post.age_dcl}}</p>
+            <p>E{{post.age_dementia}}</p>
+            <p>{{ post.content }}</p>
+          </div>
+        </div>
+        <div>
+
+          <button mat-raised-button color="warn" *ngIf='showFile' (click)='showFiles(false, post.label)'>Ocultar archivos</button>
+
+          <button mat-raised-button color="warn" *ngIf='!showFile' (click)='showFiles(true, post.label)' style="background-color: green;">Mostrar archivos</button>
+
+          <div [hidden]="!showFile">
+
+            <div class="panel panel-primary">
+              <mat-list>
+              <mat-card>
+              <div *ngFor="let file of fileUploads | async">
+                <mat-list-item>
+                  <details-upload [fileUpload]='file'></details-upload>
+                </mat-list-item>
+              </div>
+            </mat-card>
+            </mat-list>
+            </div>
+
+          </div>
+        </div>
+        <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
+          <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDITAR</a>
+          <button mat-button color="warn" (click)="onDelete(post.id)">ELIMINAR</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-paginator [length]="totalPosts" [pageSize]="postPerPage" [pageSizeOptions]="pageSizeOption" (page)="onChangedPage($event)"
+    *ngIf="posts.length > 0"></mat-paginator>
+    <p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">Aún no se han agregado pacientes.</p>
+  </div>
+ </mat-tab>
+
+    <mat-tab label="Buscar señal" (click)="showFiles(true, 'All')">
+    <div style="padding-right: 5%; padding-left: 5%;">
+      <div class="searchbar" >
+        <mat-form-field class="example-form-field" style="width: 50%">
+          <mat-label>Buscar señal</mat-label>
+          <input matInput type="text" [(ngModel)]="searchLabel" (keyup)="showFiles(true, searchLabel)" (click)="showFiles(true, searchLabel)">
+          <button mat-button *ngIf="searchLabel" matSuffix mat-icon-button aria-label="Clear" (click)="searchLabel=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button mat-raised-button color="warn" (click)="showFiles(false, searchLabel)"><mat-icon>search</mat-icon></button>
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </div>
+      <p><b>Resulados:</b></p>
+      <div class="panel panel-primary">
+        <mat-list>
+        <mat-card>
+        <div *ngFor="let file of fileUploads | async">
+          <mat-list-item>
+            <details-upload [fileUpload]='file'></details-upload>
+          </mat-list-item>
+        </div>
+      </mat-card>
+      </mat-list>
+      </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
